@@ -6,10 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.Scanner;
 
 public class SecretsConfig {
 
-    private static String SECRETS_FILE = "secrets.properties";
+    private final static String SECRETS_FILE = "secrets.properties";
     private final static Logger LOGGER = Logger.getLogger(App.class.getName());
 
     Properties properties;
@@ -25,7 +26,7 @@ public class SecretsConfig {
             if (inputStream != null) {
                 properties.load(inputStream);
             } else {
-                throw new FileNotFoundException("property file '" + SECRETS_FILE + "' not found in the classpath");
+                throw new FileNotFoundException("Property file '" + SECRETS_FILE + "' not found in the classpath");
             }
         } catch (IOException e) {
             LOGGER.error(e);
