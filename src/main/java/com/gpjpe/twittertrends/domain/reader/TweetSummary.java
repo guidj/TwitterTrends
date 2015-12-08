@@ -35,4 +35,8 @@ public class TweetSummary {
     public void setHashTag(String hashTag) {
         this.hashTag = hashTag;
     }
+
+    public String toString(){
+        return String.format("[lang=%s, hashtag=%s, timestamp=%d]",this.language,this.hashTag,this.timestamp);
+    }
 }

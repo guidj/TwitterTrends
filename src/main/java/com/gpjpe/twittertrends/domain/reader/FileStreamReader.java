@@ -19,7 +19,7 @@ public class FileStreamReader implements ITweetReader {
     }
 
     @Override
-    public List<TweetSummary> readStream() {
+    public TweetSummary getTweet() {
 
         FileReader fileReader = null;
 
