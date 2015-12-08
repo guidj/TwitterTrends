@@ -15,7 +15,7 @@ public class ReadTwitterJsonParsingTest extends TestCase {
     public void setUp() {
 
         tweets = new ArrayList<>();
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("stream-data.json");
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("stream-data.txt");
         Scanner scanner = new Scanner(inputStream);
 
         while (scanner.hasNextLine()) {
@@ -80,6 +80,6 @@ public class ReadTwitterJsonParsingTest extends TestCase {
             }
         }
 
-        assertEquals(summaryTweets.size(), 9);
+        assertEquals(summaryTweets.size(), 10);
     }
 }
