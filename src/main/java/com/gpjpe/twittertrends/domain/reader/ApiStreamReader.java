@@ -17,7 +17,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApiStreamReader implements ITweetReader{
+
+public class ApiStreamReader implements ITweetReader {
     OAuthService service;
     Token accessToken;
     BufferedReader reader;
@@ -25,13 +26,13 @@ public class ApiStreamReader implements ITweetReader{
 
 
     public ApiStreamReader(String apiKey, String apiSecret,
-                           String token, String tokenSecret, String streamEndpoint){
-                service = new ServiceBuilder()
+                           String token, String tokenSecret, String streamEndpoint) {
+        service = new ServiceBuilder()
                 .provider(TwitterApi.class)
                 .apiKey(apiKey)
                 .apiSecret(apiSecret)
                 .build();
-        accessToken = new Token(token,tokenSecret);
+        accessToken = new Token(token, tokenSecret);
 
         OAuthRequest request = new OAuthRequest(Verb.GET, streamEndpoint);
         service.signRequest(accessToken, request);
@@ -40,12 +41,11 @@ public class ApiStreamReader implements ITweetReader{
     }
 
     @Override
-    public TweetSummary getTweet(){
+    public TweetSummary getTweetSummary() {
         try {
             String line = reader.readLine();
-//            return parse(line);
-            return null;
-        } catch (IOException e){
+            return parse(line);
+        } catch (IOException e) {
             LOGGER.error(e);
             throw new RuntimeException(e);
         }
@@ -56,30 +56,28 @@ public class ApiStreamReader implements ITweetReader{
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonNode = mapper.readValue(jsonTweet, JsonNode.class);
 
-        JsonNode createdAtNode= jsonNode.get("created_at");
+        JsonNode createdAtNode = jsonNode.get("created_at");
 
-        if (createdAtNode == null){
+        if (createdAtNode == null) {
             return null;
         }
 
         JsonNode hashTagNodes = jsonNode.get("entities").get("hashtags");
 
-        if(hashTagNodes.isNull()){
-            return null;
+        List<String> hashTags = new ArrayList<>();
+
+        for (JsonNode hashTagNode : hashTagNodes) {
+            String hashTag = hashTagNode.get("text").asText();
+            hashTags.add(hashTag);
         }
 
-//        List<TweetSummary> parsedTweets = new ArrayList<>();
+        if (hashTags.isEmpty()){
+            return null;
+        }
 
         JsonNode langNode = jsonNode.get("lang");
         JsonNode timestampNode = jsonNode.get("timestamp_ms");
 
-
-        for(JsonNode hashTagNode: hashTagNodes){
-            String hashTag = hashTagNode.get("text").asText();
-//            parsedTweets.add(new TweetSummary(hashTag, langNode.asText(), Long.parseLong(timestampNode.asText())));
-            LOGGER.info(String.format("Parsed [%s, %s, %s]", timestampNode.asText(), langNode.asText(), hashTag));
-        }
-
-        return null;
+        return new TweetSummary(hashTags, langNode.asText(), Long.parseLong(timestampNode.asText()));
     }
 }

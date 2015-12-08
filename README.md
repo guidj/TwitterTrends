@@ -5,7 +5,17 @@ An app to analyse trending topics (hashtags) on twitter
 
 #Execution
 
-First, make the `startTwitterApp.sh` shell script executable:
+First, we need to configure our twitter API connection parameters in a properties file, `secrets.properties`:
+
+```
+ApiKey=secretApiKey
+ApiSecret=secretApiSecret
+Token=secretToken
+TokenSecret=tokenSecret
+StreamEndpoint=https://stream.twitter.com/1.1/statuses/sample.json
+```
+
+Once you have done that, make the `startTwitterApp.sh` shell script executable:
 
 ```sh
 chmod +x ${PROJECT_PATH}/appassembler/bin/startTwitterApp.sh

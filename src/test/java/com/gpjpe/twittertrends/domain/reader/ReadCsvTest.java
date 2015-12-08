@@ -1,10 +1,7 @@
-package com.gpjpe.twittertrends;
+package com.gpjpe.twittertrends.domain.reader;
 
 import junit.framework.TestCase;
 
-/**
- * Created by Philipp on 08/12/15.
- */
 public class ReadCsvTest extends TestCase{
     public ReadCsvTest( String testName )
     {

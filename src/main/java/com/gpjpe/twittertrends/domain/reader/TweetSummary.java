@@ -1,15 +1,26 @@
 package com.gpjpe.twittertrends.domain.reader;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class TweetSummary {
 
     String language;
     Long timestamp;
-    String hashTag;
+    List<String> hashTags;
 
     public TweetSummary(String hashTag, String language, Long timestamp) {
-        this.hashTag = hashTag;
+        this.hashTags = new ArrayList<>(Arrays.asList(new String[]{hashTag}));
         this.language = language;
         this.timestamp = timestamp;
+    }
+
+    public TweetSummary(List<String> hashTags, String language, Long timestamp) {
+        this.hashTags = hashTags;
+        this.language = language;
+        this.timestamp = timestamp;
+
     }
 
     public String getLanguage() {
@@ -28,15 +39,15 @@ public class TweetSummary {
         this.timestamp = timestamp;
     }
 
-    public String getHashTag() {
-        return hashTag;
+    public List<String> getHashTags() {
+        return hashTags;
     }
 
-    public void setHashTag(String hashTag) {
-        this.hashTag = hashTag;
+    public void setHashTags(List<String> hashTags) {
+        this.hashTags = hashTags;
     }
 
     public String toString(){
-        return String.format("[lang=%s, hashtag=%s, timestamp=%d]",this.language,this.hashTag,this.timestamp);
+        return String.format("[lang=%s, hashtag=%s, timestamp=%d]",this.language,this.hashTags,this.timestamp);
     }
 }

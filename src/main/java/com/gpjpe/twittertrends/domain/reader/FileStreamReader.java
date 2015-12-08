@@ -1,8 +1,10 @@
 package com.gpjpe.twittertrends.domain.reader;
 
-import java.io.*;
-
 import org.apache.log4j.Logger;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class FileStreamReader implements ITweetReader {
 
@@ -26,7 +28,7 @@ public class FileStreamReader implements ITweetReader {
 
     @Override
     //TODO: Verify format of CSV
-    public TweetSummary getTweet() {
+    public TweetSummary getTweetSummary() {
         try {
 
             String line = reader.readLine();
