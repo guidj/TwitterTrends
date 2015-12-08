@@ -1,10 +1,6 @@
 package com.gpjpe.twittertrends.domain.reader;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.List;
+import java.io.*;
 
 import org.apache.log4j.Logger;
 
@@ -13,28 +9,42 @@ public class FileStreamReader implements ITweetReader {
     private final static Logger LOGGER = Logger.getLogger(FileStreamReader.class.getName());
 
     String filePath;
+    BufferedReader reader;
+    boolean done;
 
     public FileStreamReader(String filePath) {
         this.filePath = filePath;
+        reader = null;
+        done = false;
+        try {
+            reader = new BufferedReader(new FileReader(filePath));
+        } catch (IOException e) {
+            LOGGER.error(e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
+    //TODO: Verify format of CSV
     public TweetSummary getTweet() {
-
-        FileReader fileReader = null;
-
         try {
-            fileReader = new FileReader(new File(filePath));
-        } catch (FileNotFoundException ex) {
-            LOGGER.error(ex);
-            throw new RuntimeException(ex);
+
+            String line = reader.readLine();
+            if (line != null) {
+                String[] splitLine = line.split(",");
+                return new TweetSummary(splitLine[2], splitLine[1], Long.parseLong(splitLine[0]));
+            }
+
+            done = true;
+        } catch (IOException e) {
+            LOGGER.error(e);
+            throw new RuntimeException(e);
         } finally {
-            if (fileReader != null) {
+            if (reader != null && done) {
                 try {
-                    fileReader.close();
+                    reader.close();
                 } catch (IOException ex) {
                     LOGGER.error(ex);
-                    throw new RuntimeException(ex);
                 }
             }
         }
