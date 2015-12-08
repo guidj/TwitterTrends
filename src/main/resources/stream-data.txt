@@ -1,14 +1,14 @@
-{"created_at": "Tue Dec 08 20:24:01 +0000 2015", "entities": {"hashtags": [{"text": "Babeldom"}, {"text": "uncircumscribed"}]}, "timestamp_ms": "494191", "lang": "en"}
-{"created_at": "Tue Dec 08 20:24:01 +0000 2015", "entities": {"hashtags": [{"text": "Homoousion"}, {"text": "ungentility"}]}, "timestamp_ms": "494270", "lang": "en"}
-{"created_at": "Tue Dec 08 20:24:01 +0000 2015", "entities": {"hashtags": [{"text": "intelligently"}, {"text": "nondecalcified"}]}, "timestamp_ms": "494323", "lang": "en"}
-{"created_at": "Tue Dec 08 20:24:01 +0000 2015", "entities": {"hashtags": [{"text": "lithoprint"}, {"text": "rockfoil"}]}, "timestamp_ms": "494421", "lang": "en"}
-{"created_at": "Tue Dec 08 20:24:01 +0000 2015", "entities": {"hashtags": [{"text": "protectionize"}, {"text": "bang"}]}, "timestamp_ms": "494499", "lang": "en"}
-{"created_at": "Tue Dec 08 20:24:01 +0000 2015", "entities": {"hashtags": [{"text": "lycosid"}, {"text": "chainlet"}]}, "timestamp_ms": "494553", "lang": "en"}
-{"created_at": "Tue Dec 08 20:24:01 +0000 2015", "entities": {"hashtags": [{"text": "actinophorous"}, {"text": "piratelike"}]}, "timestamp_ms": "494590", "lang": "en"}
-{"created_at": "Tue Dec 08 20:24:01 +0000 2015", "entities": {"hashtags": [{"text": "monosilicate"}, {"text": "papery"}]}, "timestamp_ms": "494629", "lang": "en"}
-{"created_at": "Tue Dec 08 20:24:01 +0000 2015", "entities": {"hashtags": [{"text": "footballer"}, {"text": "copepodan"}]}, "timestamp_ms": "494670", "lang": "en"}
-{"created_at": "Tue Dec 08 20:24:01 +0000 2015", "entities": {"hashtags": [{"text": "elasmobranchian"}, {"text": "mallowwort"}]}, "timestamp_ms": "494706", "lang": "en"}
-{"deleted": "Tue Dec 08 20:24:01 +0000 2015", "timestamp_ms": "494733"}
-{"deleted": "Tue Dec 08 20:24:01 +0000 2015", "timestamp_ms": "494764"}
-{"deleted": "Tue Dec 08 20:24:01 +0000 2015", "timestamp_ms": "494778"}
-{"deleted": "Tue Dec 08 20:24:01 +0000 2015", "timestamp_ms": "494791"}
+{"lang": "en", "entities": {"hashtags": [{"text": "odontochirurgic"}, {"text": "fantasticate"}]}, "timestamp_ms": "748980000", "created_at": "Tue Dec 08 20:30:33 +0000 2015"}
+{"lang": "en", "entities": {"hashtags": [{"text": "scientificoreligious"}, {"text": "importability"}]}, "timestamp_ms": "749008000", "created_at": "Tue Dec 08 20:30:33 +0000 2015"}
+{"lang": "en", "entities": {"hashtags": [{"text": "mandarin"}, {"text": "clinician"}]}, "timestamp_ms": "749088000", "created_at": "Tue Dec 08 20:30:33 +0000 2015"}
+{"lang": "en", "entities": {"hashtags": [{"text": "macroclimatic"}, {"text": "nonexportable"}]}, "timestamp_ms": "749130000", "created_at": "Tue Dec 08 20:30:33 +0000 2015"}
+{"lang": "en", "entities": {"hashtags": [{"text": "odum"}, {"text": "tirade"}]}, "timestamp_ms": "749162000", "created_at": "Tue Dec 08 20:30:33 +0000 2015"}
+{"lang": "en", "entities": {"hashtags": [{"text": "restart"}, {"text": "affrontive"}]}, "timestamp_ms": "749196000", "created_at": "Tue Dec 08 20:30:33 +0000 2015"}
+{"lang": "en", "entities": {"hashtags": [{"text": "enzymolytic"}, {"text": "berylate"}]}, "timestamp_ms": "749231000", "created_at": "Tue Dec 08 20:30:33 +0000 2015"}
+{"lang": "en", "entities": {"hashtags": [{"text": "magiric"}, {"text": "brightsomeness"}]}, "timestamp_ms": "749261000", "created_at": "Tue Dec 08 20:30:33 +0000 2015"}
+{"lang": "en", "entities": {"hashtags": [{"text": "alepole"}, {"text": "decern"}]}, "timestamp_ms": "749293000", "created_at": "Tue Dec 08 20:30:33 +0000 2015"}
+{"lang": "en", "entities": {"hashtags": [{"text": "palaeograph"}, {"text": "microsecond"}]}, "timestamp_ms": "749324000", "created_at": "Tue Dec 08 20:30:33 +0000 2015"}
+{"timestamp_ms": "749350000", "deleted": "Tue Dec 08 20:30:33 +0000 2015"}
+{"timestamp_ms": "749367000", "deleted": "Tue Dec 08 20:30:33 +0000 2015"}
+{"timestamp_ms": "749383000", "deleted": "Tue Dec 08 20:30:33 +0000 2015"}
+{"timestamp_ms": "749399000", "deleted": "Tue Dec 08 20:30:33 +0000 2015"}
