@@ -1,25 +1,25 @@
 package com.gpjpe.twittertrends.domain.reader;
 
-import com.gpjpe.twittertrends.CONFIG;
-import com.gpjpe.twittertrends.SecretsConfig;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.TwitterApi;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
+import org.scribe.model.Token;
 import org.scribe.model.Verb;
 import org.scribe.oauth.OAuthService;
-import org.scribe.model.Token;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ApiStreamReader implements ITweetReader{
     OAuthService service;
     Token accessToken;
-    InputStream tweetStream;
     BufferedReader reader;
     private final static Logger LOGGER = Logger.getLogger(ApiStreamReader.class.getName());
 
@@ -36,66 +36,50 @@ public class ApiStreamReader implements ITweetReader{
         OAuthRequest request = new OAuthRequest(Verb.GET, streamEndpoint);
         service.signRequest(accessToken, request);
         Response response = request.send();
-        reader = new BufferedReader(
-                new InputStreamReader(response.getStream()));
-
+        this.reader = new BufferedReader(new InputStreamReader(response.getStream()));
     }
-
 
     @Override
     public TweetSummary getTweet(){
         try {
             String line = reader.readLine();
-
-
-
-            return new TweetSummary(line, line, 1L);
+//            return parse(line);
+            return null;
         } catch (IOException e){
             LOGGER.error(e);
             throw new RuntimeException(e);
         }
-
-
-        //TODO complete
-
-       /* OAuthRequest request = new OAuthRequest(Verb.GET, "https://stream.twitter.com/1.1/statuses/sample.json");
-        service.signRequest(accessToken, request);
-        Response response = request.send();
-        System.out.println(response.getBody());*/
-
-
-
-
     }
 
-   /* public void test(){
-        try {
+    public static TweetSummary parse(String jsonTweet) throws IOException {
 
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readValue(jsonTweet, JsonNode.class);
 
-            OAuthRequest request = new OAuthRequest(Verb.GET, "https://stream.twitter.com/1.1/statuses/sample.json");
-            service.signRequest(accessToken, request);
-            Response response = request.send();
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(response.getStream()))
+        JsonNode createdAtNode= jsonNode.get("created_at");
 
-
-
-            int counter = 0;
-
-            while (true) {
-//                String line = reader.readLine();
-//                System.out.println(line);
-                  counter++;
-                //System.out.println(a);#
-                if(counter == 100){
-                    Thread.sleep(1000);
-                    counter = 0;
-                }
-
-            }
-        } catch (Exception e){
-            e.printStackTrace();
+        if (createdAtNode == null){
+            return null;
         }
-    }*/
 
+        JsonNode hashTagNodes = jsonNode.get("entities").get("hashtags");
+
+        if(hashTagNodes.isNull()){
+            return null;
+        }
+
+//        List<TweetSummary> parsedTweets = new ArrayList<>();
+
+        JsonNode langNode = jsonNode.get("lang");
+        JsonNode timestampNode = jsonNode.get("timestamp_ms");
+
+
+        for(JsonNode hashTagNode: hashTagNodes){
+            String hashTag = hashTagNode.get("text").asText();
+//            parsedTweets.add(new TweetSummary(hashTag, langNode.asText(), Long.parseLong(timestampNode.asText())));
+            LOGGER.info(String.format("Parsed [%s, %s, %s]", timestampNode.asText(), langNode.asText(), hashTag));
+        }
+
+        return null;
+    }
 }
