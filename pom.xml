@@ -63,7 +63,7 @@
 					</platforms>
 					<programs>
 						<program>
-							<mainClass>com.GDJPE.TwitterTrends.App</mainClass>
+							<mainClass>com.cc.gpjpe.TwitterTrends.App</mainClass>
 							<name>startTwitterApp.sh</name>
 							<jvmSettings>
 								<extraArgument>-server</extraArgument>
