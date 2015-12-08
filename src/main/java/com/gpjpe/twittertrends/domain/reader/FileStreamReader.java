@@ -53,4 +53,9 @@ public class FileStreamReader implements ITweetReader {
 
         return null;
     }
+
+    @Override
+    public boolean isClosed() {
+        return done;
+    }
 }

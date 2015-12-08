@@ -51,6 +51,11 @@ public class ApiStreamReader implements ITweetReader {
         }
     }
 
+    @Override
+    public boolean isClosed() {
+        return (reader == null);
+    }
+
     public static TweetSummary parse(String jsonTweet) throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
