@@ -19,7 +19,7 @@ ${PROJECT_PATH}/appassembler/bin/startTwitterApp.sh mode apiKey apiSecret tokenV
 
 #Twitter Stream
 ##JSON
-A sample JSON of a created tweet looks like
+A sample JSON of a created tweet looks like this:
 
 ```
 {
