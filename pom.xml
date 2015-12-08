@@ -66,7 +66,7 @@
 							<mainClass>com.GDJPE.TwitterTrends.App</mainClass>
 							<name>startTwitterApp.sh</name>
 							<jvmSettings>
-								<extraArguments>-server</extraArguments>
+								<extraArgument>-server</extraArgument>
 							</jvmSettings>
 						</program>
 					</programs>

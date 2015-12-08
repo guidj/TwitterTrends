@@ -1,4 +1,4 @@
-package com.GDJPE.TwitterTrends;
+package com.cc.gpjpe.TwitterTrends;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
