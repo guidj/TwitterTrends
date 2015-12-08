@@ -5,7 +5,8 @@ public enum CONFIG {
     API_SECRET("ApiSecret"),
     TOKEN("Token"),
     TOKEN_SECRET("TokenSecret"),
-    STREAM_ENDPOINT("StreamEndpoint");
+    STREAM_ENDPOINT("StreamEndpoint"),
+    WAIT_TIME("WaitTime");
 
     private String name;
 

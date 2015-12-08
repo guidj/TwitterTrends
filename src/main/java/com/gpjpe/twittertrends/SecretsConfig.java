@@ -34,7 +34,7 @@ public class SecretsConfig {
         }
     }
 
-    public String getProperty(CONFIG key){
-        return this.properties.getProperty(key.getName());
+    public String getProperty(CONFIG key, String defaultValue){
+        return this.properties.getProperty(key.getName(), defaultValue);
     }
 }
