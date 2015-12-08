@@ -78,6 +78,12 @@ public class ApiStreamReader implements ITweetReader {
         JsonNode langNode = jsonNode.get("lang");
         JsonNode timestampNode = jsonNode.get("timestamp_ms");
 
-        return new TweetSummary(hashTags, langNode.asText(), Long.parseLong(timestampNode.asText()));
+        if (langNode == null || timestampNode == null){
+            return null;
+        }
+
+        Long timestamp = Long.parseLong(timestampNode.asText())/1000L;
+
+        return new TweetSummary(hashTags, langNode.asText(), timestamp);
     }
 }

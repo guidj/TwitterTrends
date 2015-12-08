@@ -50,7 +50,7 @@ public class ReadTwitterJsonParsingTest extends TestCase {
 
         assertNotNull(tweetSummary);
         assertEquals(tweetSummary.getLanguage(), "en");
-        assertEquals(tweetSummary.getTimestamp().compareTo(1449579961657L), 0);
+        assertEquals(tweetSummary.getTimestamp().compareTo(1449579961657L/1000L), 0);
         assertEquals(tweetSummary.getHashTags().size(), 2);
         for(String hashTag: new String[]{"hashTagUno", "hashTag2"}) {
             assertTrue(tweetSummary.getHashTags().contains(hashTag));
