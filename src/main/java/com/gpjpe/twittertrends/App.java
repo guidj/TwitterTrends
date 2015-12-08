@@ -1,4 +1,4 @@
-package com.cc.gpjpe.TwitterTrends;
+package com.gpjpe.twittertrends;
 
 /**
  * Hello world!
