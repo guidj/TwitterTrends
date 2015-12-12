@@ -88,6 +88,7 @@ public class App {
             count++;
 
             if (count > limit){
+                LOGGER.info("Sleeping");
                 Thread.sleep(waitTime);
                 count = 0L;
             }

@@ -19,6 +19,12 @@ import java.util.List;
 
 
 public class ApiStreamReader implements ITweetReader {
+    String apiKey;
+    String apiSecret;
+    String token;
+    String tokenSecret;
+    String streamEndpoint;
+
     OAuthService service;
     Token accessToken;
     BufferedReader reader;
@@ -27,25 +33,60 @@ public class ApiStreamReader implements ITweetReader {
 
     public ApiStreamReader(String apiKey, String apiSecret,
                            String token, String tokenSecret, String streamEndpoint) {
+//        service = new ServiceBuilder()
+//                .provider(TwitterApi.class)
+//                .apiKey(apiKey)
+//                .apiSecret(apiSecret)
+//                .build();
+//        accessToken = new Token(token, tokenSecret);
+//
+//        OAuthRequest request = new OAuthRequest(Verb.GET, streamEndpoint);
+//        service.signRequest(accessToken, request);
+//        Response response = request.send();
+//        this.reader = new BufferedReader(new InputStreamReader(response.getStream()));
+
+        this.apiKey = apiKey;
+        this.apiSecret = apiSecret;
+        this.token = token;
+        this.tokenSecret = tokenSecret;
+        this.streamEndpoint = streamEndpoint;
+        init();
+    }
+
+    private void init(){
         service = new ServiceBuilder()
                 .provider(TwitterApi.class)
                 .apiKey(apiKey)
                 .apiSecret(apiSecret)
                 .build();
         accessToken = new Token(token, tokenSecret);
+        signIn();
+    }
 
+    private void signIn(){
         OAuthRequest request = new OAuthRequest(Verb.GET, streamEndpoint);
         service.signRequest(accessToken, request);
         Response response = request.send();
         this.reader = new BufferedReader(new InputStreamReader(response.getStream()));
     }
 
+
     @Override
     public TweetSummary getTweetSummary() {
         try {
             String line = reader.readLine();
             return parse(line);
-        } catch (IOException e) {
+        } catch(javax.net.ssl.SSLException e){
+            this.signIn();
+            try {
+                Thread.sleep(5000);
+
+                return parse(reader.readLine());
+            } catch (InterruptedException | IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        catch (IOException e) {
             LOGGER.error(e);
             throw new RuntimeException(e);
         }

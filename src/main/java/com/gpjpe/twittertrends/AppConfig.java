@@ -9,8 +9,8 @@ import java.util.Properties;
 
 public class AppConfig {
 
-    private final static String SECRETS_FILE = "config.properties";
-    private final static Logger LOGGER = Logger.getLogger(App.class.getName());
+    private final static String CONFIG_FILE = "config.properties";
+    private final static Logger LOGGER = Logger.getLogger(AppConfig.class.getName());
 
     Properties properties;
 
@@ -19,13 +19,13 @@ public class AppConfig {
 
         properties = new Properties();
 
-        inputStream = getClass().getClassLoader().getResourceAsStream(SECRETS_FILE);
+        inputStream = getClass().getClassLoader().getResourceAsStream(CONFIG_FILE);
 
         try {
             if (inputStream != null) {
                 properties.load(inputStream);
             } else {
-                throw new FileNotFoundException("Property file '" + SECRETS_FILE + "' not found in the classpath");
+                throw new FileNotFoundException("Property file '" + CONFIG_FILE + "' not found in the classpath");
             }
         } catch (IOException e) {
             LOGGER.error(e);
