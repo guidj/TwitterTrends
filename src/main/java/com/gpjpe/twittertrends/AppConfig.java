@@ -6,16 +6,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.Scanner;
 
-public class SecretsConfig {
+public class AppConfig {
 
-    private final static String SECRETS_FILE = "secrets.properties";
+    private final static String SECRETS_FILE = "config.properties";
     private final static Logger LOGGER = Logger.getLogger(App.class.getName());
 
     Properties properties;
 
-    public SecretsConfig() {
+    public AppConfig() {
         InputStream inputStream;
 
         properties = new Properties();

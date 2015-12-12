@@ -4,9 +4,12 @@ import com.gpjpe.twittertrends.domain.reader.ApiStreamReader;
 import com.gpjpe.twittertrends.domain.reader.FileStreamReader;
 import com.gpjpe.twittertrends.domain.reader.ITweetReader;
 import com.gpjpe.twittertrends.domain.reader.TweetSummary;
+import com.gpjpe.twittertrends.domain.writer.IStreamWriter;
+import com.gpjpe.twittertrends.domain.writer.KafkaWriter;
 import org.apache.log4j.Logger;
 
 public class App {
+
     private final static Logger LOGGER = Logger.getLogger(ApiStreamReader.class.getName());
 
     public static void main(String[] args) throws InterruptedException {
@@ -33,6 +36,7 @@ public class App {
         }
 
         //TODO: validate parameters
+        AppConfig appConfig = new AppConfig();
         int mode = Integer.parseInt(args[0]);
         String apiKey = args[1];
         String apiSecret = args[2];
@@ -40,6 +44,8 @@ public class App {
         String tokenSecret = args[4];
         String kafkaBroker = args[5];
         String filename = args[6];
+        String topic = appConfig.getProperty(CONFIG.KAFKA_TOPIC, "TweetStream");
+        Long waitTime = Long.parseLong(appConfig.getProperty(CONFIG.WAIT_TIME, "2000"));
 
         LOGGER.info("Running with parameters:");
         LOGGER.info("Mode: " + mode);
@@ -47,22 +53,23 @@ public class App {
         LOGGER.info("Token Value: " + tokenValue);
         LOGGER.info("Kafka Broker: " + kafkaBroker);
         LOGGER.info("File: " + filename);
+        LOGGER.info("WaitTime: " + waitTime);
+        LOGGER.info("KafkaTopic: " + kafkaBroker);
 
         ITweetReader tweeterStreamReader;
-        SecretsConfig secretsConfig = new SecretsConfig();
-        Long waitTime = Long.parseLong(secretsConfig.getProperty(CONFIG.WAIT_TIME, "1000"));
+        IStreamWriter streamWriter = new KafkaWriter(kafkaBroker, topic);
 
         if (mode == 1){
             tweeterStreamReader = new FileStreamReader(filename);
         }else if (mode == 2){
             tweeterStreamReader = new ApiStreamReader(apiKey, apiSecret, tokenValue, tokenSecret,
-                    secretsConfig.getProperty(CONFIG.STREAM_ENDPOINT, null));
+                    appConfig.getProperty(CONFIG.STREAM_ENDPOINT, null));
         }else{
-            throw new RuntimeException(String.format("Invalid mode: %d. Should be 1 or 2", mode));
+            throw new IllegalArgumentException(String.format("Invalid mode: %d. Should be 1 or 2", mode));
         }
 
         Long count = 0L;
-        final Long limit = 500L;
+        final Long limit = 1000L;
         TweetSummary tweetSummary;
 
         while(true){
@@ -75,6 +82,7 @@ public class App {
 
             if (tweetSummary != null){
                 LOGGER.info(tweetSummary);
+                streamWriter.write(tweetSummary);
             }
 
             count++;
