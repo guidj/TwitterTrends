@@ -47,7 +47,7 @@ public class KafkaWriter implements IStreamWriter {
         List<String> messages = new ArrayList<String>();
 
         for(String hashTag: tweetSummary.getHashTags()){
-            messages.add(String.format("%s, %s, %s", tweetSummary.getLanguage(), tweetSummary.getTimestamp(), hashTag));
+            messages.add(String.format("%s,%s,%s", tweetSummary.getLanguage(), tweetSummary.getTimestamp(), hashTag));
         }
 
         for(String message: messages){
