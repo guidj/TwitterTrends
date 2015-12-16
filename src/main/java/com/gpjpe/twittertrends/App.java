@@ -45,7 +45,7 @@ public class App {
         String kafkaBroker = args[5];
         String filename = args[6];
         String topic = appConfig.getProperty(CONFIG.KAFKA_TOPIC, "TweetStream");
-        Long waitTime = Long.parseLong(appConfig.getProperty(CONFIG.WAIT_TIME, "2000"));
+        Long waitTime = Long.parseLong(appConfig.getProperty(CONFIG.WAIT_TIME, "1000"));
 
         LOGGER.info("Running with parameters:");
         LOGGER.info("Mode: " + mode);

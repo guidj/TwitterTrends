@@ -74,13 +74,12 @@ public class ApiStreamReader implements ITweetReader {
     @Override
     public TweetSummary getTweetSummary() {
         try {
-            String line = reader.readLine();
-            return parse(line);
+            return parse(reader.readLine());
         } catch(javax.net.ssl.SSLException e){
-            this.signIn();
+
             try {
                 Thread.sleep(5000);
-
+                this.signIn();
                 return parse(reader.readLine());
             } catch (InterruptedException | IOException ex) {
                 throw new RuntimeException(ex);
