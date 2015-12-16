@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+
 public class FileStreamReader implements ITweetReader {
 
     private final static Logger LOGGER = Logger.getLogger(FileStreamReader.class.getName());
@@ -27,14 +28,12 @@ public class FileStreamReader implements ITweetReader {
     }
 
     @Override
-    //TODO: Verify format of CSV
     public TweetSummary getTweetSummary() {
         try {
 
             String line = reader.readLine();
             if (line != null) {
-                String[] splitLine = line.split(",");
-                return new TweetSummary(splitLine[2], splitLine[1], Long.parseLong(splitLine[0]));
+                return TweetSummary.parseCreatedTweet(line);
             }
 
             done = true;

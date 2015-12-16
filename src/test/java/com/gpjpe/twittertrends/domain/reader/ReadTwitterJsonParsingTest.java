@@ -30,7 +30,7 @@ public class ReadTwitterJsonParsingTest extends TestCase {
 
     public void testShouldParseValidTweet() throws IOException{
 
-        String tweet = "{\n" +
+        String tweetJson = "{\n" +
                 "  \"created_at\": \"Tue Dec 08 13:06:01 +0000 2015\",\n" +
                 "  \"entities\": {\n" +
                 "    \"hashtags\": [\n" +
@@ -46,7 +46,7 @@ public class ReadTwitterJsonParsingTest extends TestCase {
                 "  \"timestamp_ms\": \"1449579961657\"\n" +
                 "}";
 
-        TweetSummary tweetSummary = ApiStreamReader.parse(tweet);
+        TweetSummary tweetSummary = TweetSummary.parseCreatedTweet(tweetJson);
 
         assertNotNull(tweetSummary);
         assertEquals(tweetSummary.getLanguage(), "en");
@@ -58,13 +58,14 @@ public class ReadTwitterJsonParsingTest extends TestCase {
     }
 
     public void testShouldNotParseDeletedTweet() throws IOException {
-        String tweet = "{\n" +
+
+        String tweetJson = "{\n" +
                 "  \"deleted\": \"Tue Dec 08 13:06:01 +0000 2015\",\n" +
                 "  \"lang\": \"en\",\n" +
                 "  \"timestamp_ms\": \"1449579961657\"\n" +
                 "}";
 
-        TweetSummary tweetSummary = ApiStreamReader.parse(tweet);
+        TweetSummary tweetSummary =  TweetSummary.parseCreatedTweet(tweetJson);
         assertNull(tweetSummary);
     }
 
@@ -72,8 +73,8 @@ public class ReadTwitterJsonParsingTest extends TestCase {
 
         TweetSummary tweetSummary;
         List<TweetSummary> summaryTweets = new ArrayList<>();
-        for(String tweet: tweets){
-            tweetSummary = ApiStreamReader.parse(tweet);
+        for(String tweetJson: tweets){
+            tweetSummary = TweetSummary.parseCreatedTweet(tweetJson);
 
             if (tweetSummary != null){
                 summaryTweets.add(tweetSummary);

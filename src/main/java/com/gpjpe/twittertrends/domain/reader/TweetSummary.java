@@ -1,8 +1,13 @@
 package com.gpjpe.twittertrends.domain.reader;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 public class TweetSummary {
 
@@ -21,6 +26,42 @@ public class TweetSummary {
         this.language = language;
         this.timestamp = timestamp;
 
+    }
+
+    public static TweetSummary parseCreatedTweet(String jsonTweet) throws IOException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readValue(jsonTweet, JsonNode.class);
+
+        JsonNode createdAtNode = jsonNode.get("created_at");
+
+        if (createdAtNode == null) {
+            return null;
+        }
+
+        JsonNode hashTagNodes = jsonNode.get("entities").get("hashtags");
+
+        List<String> hashTags = new ArrayList<>();
+
+        for (JsonNode hashTagNode : hashTagNodes) {
+            String hashTag = hashTagNode.get("text").asText();
+            hashTags.add(hashTag);
+        }
+
+        if (hashTags.isEmpty()){
+            return null;
+        }
+
+        JsonNode langNode = jsonNode.get("lang");
+        JsonNode timestampNode = jsonNode.get("timestamp_ms");
+
+        if (langNode == null || timestampNode == null){
+            return null;
+        }
+
+        Long timestamp = Long.parseLong(timestampNode.asText())/1000L;
+
+        return new TweetSummary(hashTags, langNode.asText(), timestamp);
     }
 
     public String getLanguage() {

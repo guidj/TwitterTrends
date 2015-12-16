@@ -1,7 +1,5 @@
 package com.gpjpe.twittertrends.domain.reader;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.TwitterApi;
@@ -14,8 +12,6 @@ import org.scribe.oauth.OAuthService;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class ApiStreamReader implements ITweetReader {
@@ -74,13 +70,13 @@ public class ApiStreamReader implements ITweetReader {
     @Override
     public TweetSummary getTweetSummary() {
         try {
-            return parse(reader.readLine());
+            return TweetSummary.parseCreatedTweet(reader.readLine());
         } catch(javax.net.ssl.SSLException e){
 
             try {
                 Thread.sleep(5000);
                 this.signIn();
-                return parse(reader.readLine());
+                return TweetSummary.parseCreatedTweet(reader.readLine());
             } catch (InterruptedException | IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -94,41 +90,5 @@ public class ApiStreamReader implements ITweetReader {
     @Override
     public boolean isClosed() {
         return (reader == null);
-    }
-
-    public static TweetSummary parse(String jsonTweet) throws IOException {
-
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode jsonNode = mapper.readValue(jsonTweet, JsonNode.class);
-
-        JsonNode createdAtNode = jsonNode.get("created_at");
-
-        if (createdAtNode == null) {
-            return null;
-        }
-
-        JsonNode hashTagNodes = jsonNode.get("entities").get("hashtags");
-
-        List<String> hashTags = new ArrayList<>();
-
-        for (JsonNode hashTagNode : hashTagNodes) {
-            String hashTag = hashTagNode.get("text").asText();
-            hashTags.add(hashTag);
-        }
-
-        if (hashTags.isEmpty()){
-            return null;
-        }
-
-        JsonNode langNode = jsonNode.get("lang");
-        JsonNode timestampNode = jsonNode.get("timestamp_ms");
-
-        if (langNode == null || timestampNode == null){
-            return null;
-        }
-
-        Long timestamp = Long.parseLong(timestampNode.asText())/1000L;
-
-        return new TweetSummary(hashTags, langNode.asText(), timestamp);
     }
 }
