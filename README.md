@@ -85,4 +85,8 @@ A sample of a deleted Tweet looks like this:
 
 ##CSV
 
+The CSV files have the same data as the Twitter stream API. Each tweet is in a single line.
+
+
+
 
