@@ -81,15 +81,19 @@ public class App {
             }
 
             if (tweetSummary != null){
-                LOGGER.info(tweetSummary);
+//                LOGGER.info(tweetSummary);
                 streamWriter.write(tweetSummary);
             }
 
             count++;
 
             if (count > limit){
-                LOGGER.info("Sleeping");
-                Thread.sleep(waitTime);
+                if (mode == 2) {
+                    LOGGER.info(
+                            String.format("Downloaded %d tweets. Sleeping...", count)
+                    );
+                    Thread.sleep(waitTime);
+                }
                 count = 0L;
             }
         }
