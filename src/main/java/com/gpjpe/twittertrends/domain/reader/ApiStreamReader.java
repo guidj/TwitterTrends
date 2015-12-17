@@ -1,5 +1,6 @@
 package com.gpjpe.twittertrends.domain.reader;
 
+import com.gpjpe.twittertrends.domain.twitter.APISecurity;
 import org.apache.log4j.Logger;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.TwitterApi;
@@ -15,10 +16,8 @@ import java.io.InputStreamReader;
 
 
 public class ApiStreamReader implements ITweetReader {
-    String apiKey;
-    String apiSecret;
-    String token;
-    String tokenSecret;
+
+    APISecurity security;
     String streamEndpoint;
 
     OAuthService service;
@@ -27,24 +26,9 @@ public class ApiStreamReader implements ITweetReader {
     private final static Logger LOGGER = Logger.getLogger(ApiStreamReader.class.getName());
 
 
-    public ApiStreamReader(String apiKey, String apiSecret,
-                           String token, String tokenSecret, String streamEndpoint) {
-//        service = new ServiceBuilder()
-//                .provider(TwitterApi.class)
-//                .apiKey(apiKey)
-//                .apiSecret(apiSecret)
-//                .build();
-//        accessToken = new Token(token, tokenSecret);
-//
-//        OAuthRequest request = new OAuthRequest(Verb.GET, streamEndpoint);
-//        service.signRequest(accessToken, request);
-//        Response response = request.send();
-//        this.reader = new BufferedReader(new InputStreamReader(response.getStream()));
+    public ApiStreamReader(APISecurity security, String streamEndpoint) {
 
-        this.apiKey = apiKey;
-        this.apiSecret = apiSecret;
-        this.token = token;
-        this.tokenSecret = tokenSecret;
+        this.security = security;
         this.streamEndpoint = streamEndpoint;
         init();
     }
@@ -52,10 +36,10 @@ public class ApiStreamReader implements ITweetReader {
     private void init(){
         service = new ServiceBuilder()
                 .provider(TwitterApi.class)
-                .apiKey(apiKey)
-                .apiSecret(apiSecret)
+                .apiKey(this.security.getApiKey())
+                .apiSecret(this.security.getApiSecret())
                 .build();
-        accessToken = new Token(token, tokenSecret);
+        accessToken = new Token(security.getTokenValue(), this.security.getTokenSecret());
         signIn();
     }
 
