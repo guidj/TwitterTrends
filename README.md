@@ -1,9 +1,9 @@
-#Twitter Storm
+# Twitter Storm
 
 An app to analyse trending topics (hashtags) on twitter
 
 
-#Execution
+# Execution
 
 First, we need to configure our twitter API connection parameters in a properties file, `config.properties`:
 
@@ -34,8 +34,8 @@ Then, just call the script with the required parameters:
 ${PROJECT_PATH}/appassembler/bin/startTwitterApp.sh mode apiKey apiSecret tokenValue tokenSecret kafkaBroker filepath
 ```
 
-#Twitter Stream
-##JSON
+# Twitter Stream
+## JSON
 A sample JSON of a created tweet looks like this:
 
 ```
@@ -83,7 +83,7 @@ A sample of a deleted Tweet looks like this:
 }
 ```
 
-##CSV
+## CSV
 
 The CSV files have the same data as the Twitter stream API. Each tweet is in a single line.
 
